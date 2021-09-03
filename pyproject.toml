@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "ya-eureka-binder"
+version = "0.1.0"
+description = "Client for Netflix Eureka"
+authors = ["Ivan Tyshchenko"]
+license = "BSD"
+packages = [
+    { include = 'ya_eureka_binder', from = 'src'},
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+httpx = "^0.19.0"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^2.15.0"
+flakehell = "^0.9.0"
+dunamai = "^1.6.0"
+pytest = "^6.2.5"
+pytest-asyncio = "^0.15.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
