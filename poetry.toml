@@ -1,0 +1,4 @@
+[virtualenvs]
+# This file force poetry to use $PROJECT/.venv instead of $XDG/.poetry/cache/venv-*/
+create = true
+in-project = true
