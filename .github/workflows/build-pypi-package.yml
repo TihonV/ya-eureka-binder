@@ -23,6 +23,10 @@ jobs:
       PYPI_URL: ${{ secrets.PYPI_URL }}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Set default repo
         run: |
           cat << EOF >> pyproject.toml
           [[tool.poetry.source]]
@@ -31,9 +35,6 @@ jobs:
           default = true
 
           EOF
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
       - name: Run image
         uses: abatilo/actions-poetry@v2.0.0
         with:
