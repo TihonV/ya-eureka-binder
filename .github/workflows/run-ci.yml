@@ -31,6 +31,7 @@ jobs:
           poetry run coverage run -m pytest
           echo "test_failed=$?" >> $GITHUB_ENV
           poetry run coverage json
+        continue-on-error: true
 
       - name: Set red badge for tests
         uses: schneegans/dynamic-badges-action@v1.1.0
@@ -42,6 +43,10 @@ jobs:
           label: test
           message: failed
           color: red
+
+      - name: Fail job when tests failed
+        if: ${{ env.test_failed == '1' }}
+        run: exit 1
 
       - name: Set green badge for tests
         uses: schneegans/dynamic-badges-action@v1.1.0
