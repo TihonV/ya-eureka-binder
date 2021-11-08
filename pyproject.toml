@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ya-eureka-binder"
-version = "0.1.0"
+version = "0.0.0"
 description = "Client for Netflix Eureka"
 authors = ["Ivan Tyshchenko"]
 license = "BSD"
@@ -9,7 +9,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.1"
 httpx = "^0.19.0"
 
 [tool.poetry.dev-dependencies]
@@ -17,13 +17,8 @@ pre-commit = "^2.15.0"
 flakehell = "^0.9.0"
 dunamai = "^1.6.0"
 pytest = "^6.2.5"
-pytest-asyncio = "^0.15.1"
-
-[[tool.poetry.source]]
-name = "pypi"
-url = "https://test.pypi.org/simple/"
-default = true
-
+pytest-asyncio = "*"
+coverage = "^6.1.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
