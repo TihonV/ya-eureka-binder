@@ -1,5 +1,9 @@
 # Client for Netflix Eureka
 
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/TihonV/98144240d7006bed5ef79984638dd4cc/raw/coverage.json)
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/TihonV/98144240d7006bed5ef79984638dd4cc/raw/tests.json)
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/TihonV/98144240d7006bed5ef79984638dd4cc/raw/pypi.json)
+
 ## Description
 
 Yet another client for Netflix [Eureka](https://github.com/spring-cloud/spring-cloud-netflix) 
