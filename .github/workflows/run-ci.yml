@@ -6,7 +6,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ 3.8 ]
-        poetry-version: [ 1.0, 1.1.11 ]
+        poetry-version: [ 1.1.11 ]
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     services:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          poetry run coverage -m pytest
+          poetry run coverage run -m pytest
           echo "test_failed=$?" >> $GITHUB_ENV
           poetry run coverage json
 
@@ -71,10 +71,10 @@ jobs:
 
 #      - name: Build artifact
 #        run: poetry build
-#
+
 #      - name: Publish artifact
 #        run: poetry publish
-#
+
       - name: Set package-version badge
         uses: schneegans/dynamic-badges-action@v1.1.0
         with:
