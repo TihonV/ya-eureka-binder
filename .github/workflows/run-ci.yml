@@ -1,0 +1,86 @@
+name: hello-world
+on: workflow_dispatch
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ 3.8 ]
+        poetry-version: [ 1.0, 1.1.11 ]
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    services:
+      eureka:
+        image: springcloud/eureka:latest
+        ports:
+          - "8761:8761"
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run pytest
+        run: |
+          poetry run coverage -m pytest
+          echo "test_failed=$?" >> $GITHUB_ENV
+          poetry run coverage json
+
+      - name: Set red badge for tests
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        if: ${{ env.test_failed == '1' }}
+        with:
+          auth: ${{ secrets.GIST_API_KEY }}
+          gistID: 98144240d7006bed5ef79984638dd4cc
+          filename: tests.json
+          label: test
+          message: failed
+          color: red
+
+      - name: Set green badge for tests
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        if: ${{ env.test_failed == '0' }}
+        with:
+          auth: ${{ secrets.GIST_API_KEY }}
+          gistID: 98144240d7006bed5ef79984638dd4cc
+          filename: tests.json
+          label: test
+          message: pass
+          color: green
+
+      - name: Read coverage report
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: echo "cov_result=`jq .total coverage.json -r`" >> $GITHUB_ENV
+
+      - name: Set coverage badge
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        with:
+          auth: ${{ secrets.GIST_API_KEY }}
+          gistID: 98144240d7006bed5ef79984638dd4cc
+          filename: coverage.json
+          label: coverage
+          message: ${{ env.cov_result }}%
+          color: yellow
+
+#      - name: Build artifact
+#        run: poetry build
+#
+#      - name: Publish artifact
+#        run: poetry publish
+#
+      - name: Set package-version badge
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        with:
+          auth: ${{ secrets.GIST_API_KEY }}
+          gistID: 98144240d7006bed5ef79984638dd4cc
+          filename: pypi.json
+          label: pypi
+          message: "n/a"
+          color: green
